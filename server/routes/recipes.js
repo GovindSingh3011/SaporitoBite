@@ -6,32 +6,17 @@ const {
     updateRecipe,
     deleteRecipe
 } = require('../controllers/recipeController');
+const { protect, authorize } = require('../middleware/auth');
 
 const router = express.Router();
 
-// @route   GET /api/recipes
-// @desc    Get all recipes with optional filtering and pagination
-// @access  Public
+// Public routes
 router.get('/', getRecipes);
-
-// @route   GET /api/recipes/:id
-// @desc    Get single recipe by ID
-// @access  Public
 router.get('/:id', getRecipe);
 
-// @route   POST /api/recipes
-// @desc    Create a new recipe
-// @access  Public
-router.post('/', createRecipe);
-
-// @route   PUT /api/recipes/:id
-// @desc    Update recipe by ID
-// @access  Public
-router.put('/:id', updateRecipe);
-
-// @route   DELETE /api/recipes/:id
-// @desc    Delete recipe by ID
-// @access  Public
-router.delete('/:id', deleteRecipe);
+// Protected routes - Only chef and admin can create/update/delete recipes
+router.post('/', protect, authorize('chef', 'admin'), createRecipe);
+router.put('/:id', protect, authorize('chef', 'admin'), updateRecipe);
+router.delete('/:id', protect, authorize('chef', 'admin'), deleteRecipe);
 
 module.exports = router;

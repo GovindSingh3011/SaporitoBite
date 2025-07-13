@@ -52,6 +52,15 @@ const recipeSchema = new mongoose.Schema({
         type: String,
         trim: true,
         maxlength: [300, 'Tip cannot exceed 300 characters']
+    },
+    createdBy: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: [true, 'Recipe must be created by a user']
+    },
+    updatedBy: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
     }
 }, {
     timestamps: true

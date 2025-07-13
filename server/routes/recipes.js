@@ -2,6 +2,7 @@ const express = require('express');
 const {
     getRecipes,
     getRecipe,
+    getMyRecipes,
     createRecipe,
     updateRecipe,
     deleteRecipe
@@ -14,7 +15,8 @@ const router = express.Router();
 router.get('/', getRecipes);
 router.get('/:id', getRecipe);
 
-// Protected routes - Only chef and admin can create/update/delete recipes
+// Protected routes - Both chef and admin can access
+router.get('/my-recipes', protect, authorize('chef', 'admin'), getMyRecipes);
 router.post('/', protect, authorize('chef', 'admin'), createRecipe);
 router.put('/:id', protect, authorize('chef', 'admin'), updateRecipe);
 router.delete('/:id', protect, authorize('chef', 'admin'), deleteRecipe);

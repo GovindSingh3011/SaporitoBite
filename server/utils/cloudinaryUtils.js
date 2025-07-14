@@ -2,48 +2,70 @@ const cloudinary = require('../config/cloudinary');
 
 // Extract public ID from Cloudinary URL
 const extractPublicId = (imageUrl) => {
-    if (!imageUrl || !imageUrl.includes('cloudinary.com')) {
+    try {
+        // Extract public ID from Cloudinary URL
+        // Example URL: https://res.cloudinary.com/cloud-name/image/upload/v1234567890/spoonsage/recipes/abc123.jpg
+        const parts = imageUrl.split('/');
+        const uploadIndex = parts.indexOf('upload');
+
+        if (uploadIndex !== -1 && uploadIndex < parts.length - 1) {
+            // Get everything after 'upload' and version (if present)
+            let publicIdParts = parts.slice(uploadIndex + 1);
+
+            // Remove version if present (starts with 'v' followed by numbers)
+            if (publicIdParts[0] && publicIdParts[0].match(/^v\d+$/)) {
+                publicIdParts = publicIdParts.slice(1);
+            }
+
+            // Join the remaining parts and remove file extension
+            const publicId = publicIdParts.join('/').replace(/\.[^/.]+$/, '');
+            return publicId;
+        }
+
+        return null;
+    } catch (error) {
+        console.error('Error extracting public ID:', error);
         return null;
     }
-
-    // Extract public ID from URL
-    // Example URL: https://res.cloudinary.com/your-cloud/image/upload/v1234567890/spoonsage/recipes/abc123.jpg
-    const parts = imageUrl.split('/');
-    const uploadIndex = parts.findIndex(part => part === 'upload');
-
-    if (uploadIndex === -1) return null;
-
-    // Get everything after 'upload/v{version}/'
-    const pathAfterVersion = parts.slice(uploadIndex + 2).join('/');
-
-    // Remove file extension
-    const publicId = pathAfterVersion.replace(/\.[^/.]+$/, '');
-
-    return publicId;
 };
 
-// Delete image from Cloudinary
 const deleteImageFromCloudinary = async (imageUrl) => {
     try {
+        if (!imageUrl) {
+            return {
+                success: false,
+                message: 'No image URL provided'
+            };
+        }
+
         const publicId = extractPublicId(imageUrl);
 
         if (!publicId) {
-            console.log('No valid public ID found for image deletion');
-            return { success: false, message: 'Invalid image URL' };
+            return {
+                success: false,
+                message: 'Could not extract public ID from image URL'
+            };
         }
 
         const result = await cloudinary.uploader.destroy(publicId);
 
         if (result.result === 'ok') {
-            console.log(`Image deleted successfully: ${publicId}`);
-            return { success: true, message: 'Image deleted successfully' };
+            return {
+                success: true,
+                message: 'Image deleted successfully from Cloudinary'
+            };
         } else {
-            console.log(`Failed to delete image: ${publicId}`, result);
-            return { success: false, message: 'Failed to delete image' };
+            return {
+                success: false,
+                message: `Failed to delete image: ${result.result}`
+            };
         }
     } catch (error) {
-        console.error('Error deleting image from Cloudinary:', error);
-        return { success: false, message: 'Error deleting image', error: error.message };
+        console.error('Cloudinary deletion error:', error);
+        return {
+            success: false,
+            message: error.message
+        };
     }
 };
 

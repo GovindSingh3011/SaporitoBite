@@ -18,7 +18,7 @@ router.get('/:id', getRecipe);
 // Private routes
 router.get('/my-recipes', protect, authorize('chef', 'admin'), getMyRecipes);
 router.post('/', protect, authorize('chef', 'admin'), upload.single('image'), createRecipe);
-router.put('/:id', protect, authorize('chef', 'admin'), updateRecipe);
+router.put('/:id', protect, authorize('chef', 'admin'), upload.single('image'), updateRecipe);
 router.delete('/:id', protect, authorize('chef', 'admin'), deleteRecipe);
 
 module.exports = router;

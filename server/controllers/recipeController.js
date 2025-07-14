@@ -179,13 +179,28 @@ const updateRecipe = async (req, res) => {
             });
         }
 
+        // Handle image replacement
+        let updateData = { ...req.body, updatedBy: req.user.id };
+
+        // If a new image is uploaded
+        if (req.file) {
+            // Delete old image from Cloudinary if it exists
+            if (recipe.imageUrl) {
+                const deleteResult = await deleteImageFromCloudinary(recipe.imageUrl);
+                if (!deleteResult.success) {
+                    console.warn('Warning: Failed to delete old image from Cloudinary:', deleteResult.message);
+                    // Continue with update even if old image deletion fails
+                }
+            }
+
+            // Set new image URL
+            updateData.imageUrl = req.file.path;
+        }
+
         // Update the recipe with new data
         recipe = await Recipe.findByIdAndUpdate(
             req.params.id,
-            {
-                ...req.body,
-                updatedBy: req.user.id
-            },
+            updateData,
             {
                 new: true,
                 runValidators: true

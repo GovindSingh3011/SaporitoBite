@@ -110,7 +110,13 @@ const getMyRecipes = async (req, res) => {
 // @access  Private (Chef/Admin)
 const createRecipe = async (req, res) => {
     try {
-        const { title, imageUrl, recipeType, dietType, description, ingredients, directions, tip } = req.body;
+        const { title, recipeType, dietType, description, ingredients, directions, tip } = req.body;
+
+        // Get image URL from Cloudinary upload (if image was uploaded)
+        let imageUrl = '';
+        if (req.file) {
+            imageUrl = req.file.path; // Cloudinary URL
+        }
 
         const recipe = await Recipe.create({
             title,

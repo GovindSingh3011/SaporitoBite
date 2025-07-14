@@ -1,4 +1,6 @@
 const express = require('express');
+const router = express.Router();
+const upload = require('../middleware/upload');
 const {
     getRecipes,
     getRecipe,
@@ -9,15 +11,13 @@ const {
 } = require('../controllers/recipeController');
 const { protect, authorize } = require('../middleware/auth');
 
-const router = express.Router();
-
 // Public routes
 router.get('/', getRecipes);
 router.get('/:id', getRecipe);
 
-// Protected routes - Both chef and admin can access
+// Private routes
 router.get('/my-recipes', protect, authorize('chef', 'admin'), getMyRecipes);
-router.post('/', protect, authorize('chef', 'admin'), createRecipe);
+router.post('/', protect, authorize('chef', 'admin'), upload.single('image'), createRecipe);
 router.put('/:id', protect, authorize('chef', 'admin'), updateRecipe);
 router.delete('/:id', protect, authorize('chef', 'admin'), deleteRecipe);
 

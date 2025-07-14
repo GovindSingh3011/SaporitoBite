@@ -1,4 +1,5 @@
 const Recipe = require('../models/Recipe');
+const { deleteImageFromCloudinary } = require('../utils/cloudinaryUtils');
 
 // @desc    Get all recipes
 // @route   GET /api/recipes
@@ -242,6 +243,16 @@ const deleteRecipe = async (req, res) => {
             });
         }
 
+        // Delete image from Cloudinary if it exists
+        if (recipe.imageUrl) {
+            const deleteResult = await deleteImageFromCloudinary(recipe.imageUrl);
+            if (!deleteResult.success) {
+                console.warn('Warning: Failed to delete image from Cloudinary:', deleteResult.message);
+                // Continue with recipe deletion even if image deletion fails
+            }
+        }
+
+        // Delete the recipe from database
         await Recipe.findByIdAndDelete(req.params.id);
 
         res.status(200).json({

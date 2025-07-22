@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
+const os = require('os');
 
 const connectDB = require('./config/database');
 const recipeRoutes = require('./routes/recipes');
@@ -61,9 +62,21 @@ app.use('*', (req, res) => {
 // Error handler middleware (should be last)
 app.use(errorHandler);
 
-app.listen(PORT, (error) => {
-    if (!error)
-        console.log(`Server running on http://localhost:${PORT}`);
-    else
-        console.log("Error occurred, server can't start", error);
+function getLocalIP() {
+    const interfaces = os.networkInterfaces();
+    for (const name of Object.keys(interfaces)) {
+        for (const iface of interfaces[name]) {
+            if (iface.family === 'IPv4' && !iface.internal) {
+                return iface.address;
+            }
+        }
+    }
+    return 'localhost';
+}
+
+app.listen(PORT, '0.0.0.0', () => {
+    const localIP = getLocalIP();
+    console.log(`Server running on:`);
+    console.log(`- Local:   http://localhost:${PORT}`);
+    console.log(`- Network: http://${localIP}:${PORT}`);
 });

@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 const os = require('os');
 
@@ -17,39 +18,24 @@ connectDB();
 
 // Middleware
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production' ? ['https://your-frontend-domain.com'] : ['http://localhost:5173', 'http://localhost:3000'],
+    origin: (process.env.CORS_ORIGIN || '').split(','),
     credentials: true
 }));
 app.use(morgan('dev'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files
+app.use(express.static(path.join(__dirname, 'views')));
+
 // Routes
 app.get('/', (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: 'Welcome to SpoonSage API',
-        version: '1.0.0',
-        endpoints: {
-            recipes: '/api/recipes',
-            auth: '/api/auth',
-            documentation: 'https://github.com/your-repo/spoonsage-api'
-        }
-    });
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
 // API Routes
 app.use('/api/recipes', recipeRoutes);
 app.use('/api/auth', authRoutes);
-
-// Health check endpoint
-app.get('/health', (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: 'Server is healthy',
-        timestamp: new Date().toISOString()
-    });
-});
 
 // 404 handler
 app.use('*', (req, res) => {

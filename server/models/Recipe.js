@@ -27,6 +27,7 @@ const recipeSchema = new mongoose.Schema({
     },
     dietType: {
         type: String,
+        required: [true, 'Please specify the diet type'],
         enum: {
             values: ['vegetarian', 'vegan', 'non-vegetarian', 'gluten-free', 'keto', 'paleo', 'dairy-free'],
             message: 'Diet type must be one of: vegetarian, vegan, non-vegetarian, gluten-free, keto, paleo, dairy-free'
@@ -35,8 +36,7 @@ const recipeSchema = new mongoose.Schema({
     description: {
         type: String,
         required: [true, 'Please provide a recipe description'],
-        trim: true,
-        maxlength: [500, 'Description cannot exceed 500 characters']
+        trim: true
     },
     ingredients: [{
         type: String,
@@ -50,8 +50,7 @@ const recipeSchema = new mongoose.Schema({
     }],
     tip: {
         type: String,
-        trim: true,
-        maxlength: [300, 'Tip cannot exceed 300 characters']
+        trim: true
     },
     createdBy: {
         type: mongoose.Schema.ObjectId,

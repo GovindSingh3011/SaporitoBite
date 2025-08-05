@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpoonSage API Documentation</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="SpoonSageWhite.svg" type="image/svg+xml" />
+</head>
+
+<body>
+    <div class="modern-header">
+        <div class="header-content">
+            <div class="title-container">
+                <img src="spoonSageWhite.svg" alt="API Logo" class="logo" />
+                <h1 class="api-title">API Documentation</h1>
+            </div>
+            <div class="subtitle">Professional Recipe Management System</div>
+            <div class="version-badge">v1.0.0</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <section id="overview">
+            <h2>API Overview</h2>
+            <div class="card">
+                <p>
+                    SpoonSage is a comprehensive recipe management API that allows users to create, manage, and discover
+                    culinary recipes. The API supports role-based access control with admin and chef roles, image
+                    uploads via Cloudinary, and advanced filtering capabilities.
+                </p>
+
+                <h3>Key Features</h3>
+                <ul>
+                    <li>
+                        <strong>Role-based Authentication:</strong> Admin and Chef user roles
+                    </li>
+                    <li>
+                        <strong>Recipe Management:</strong> Full CRUD operations for recipes
+                    </li>
+                    <li>
+                        <strong>Image Upload:</strong> Cloudinary integration for recipe images
+                    </li>
+                    <li>
+                        <strong>Advanced Filtering:</strong> Search by recipe type, diet type, and keywords
+                    </li>
+                    <li>
+                        <strong>Secure:</strong> JWT-based authentication with bcrypt password hashing
+                    </li>
+                </ul>
+
+                <h3>Base URL</h3>
+                <div class="endpoint-url">https://your-api-domain.com</div>
+
+                <h3>Quick Start</h3>
+                <div class="code-block">
+                    <pre>
+# Register a new chef
+curl -X POST https://your-api-domain.com/api/auth/register \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Chef John",
+  "email": "john@example.com",
+  "password": "password123",
+  "role": "chef"
+}'
+
+# Login
+curl -X POST https://your-api-domain.com/api/auth/login \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "john@example.com",
+  "password": "password123"
+}'
+                    </pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="authentication">
+            <h2>Authentication</h2>
+            <p>
+                SpoonSage uses JWT (JSON Web Tokens) for authentication.
+                Include the
+                token in the Authorization header for protected routes.
+            </p>
+
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <strong>Register User</strong>
+                <div class="endpoint-url">/api/auth/register</div>
+                <h4>Request Body</h4>
+                <table class="params-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>string</td>
+                        <td><span class="required">Required</span></td>
+                        <td>User's full name (max 50 chars)</td>
+                    </tr>
+                    <tr>
+                        <td>email</td>
+                        <td>string</td>
+                        <td><span class="required">Required</span></td>
+                        <td>Valid email address</td>
+                    </tr>
+                    <tr>
+                        <td>password</td>
+                        <td>string</td>
+                        <td><span class="required">Required</span></td>
+                        <td>Password (min 6 chars)</td>
+                    </tr>
+                    <tr>
+                        <td>role</td>
+                        <td>string</td>
+                        <td><span class="required">Required</span></td>
+                        <td>Either 'admin' or 'chef'</td>
+                    </tr>
+                </table>
+                <h4>
+                    Response <span class="status-code status-201">201
+                        Created</span>
+                </h4>
+                <div class="code-block">
+                    <pre>
+{
+  "success": true,
+  "message": "User registered successfully",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "64f7d1e2b1234567890abcde",
+    "name": "Chef John",
+    "email": "john@example.com",
+    "role": "chef"
+  }
+}
+                    </pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <strong>Login User</strong>
+                <div class="endpoint-url">/api/auth/login</div>
+                <h4>Request Body</h4>
+                <table class="params-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>email</td>
+                        <td>string</td>
+                        <td><span class="required">Required</span></td>
+                        <td>User's email address</td>
+                    </tr>
+                    <tr>
+                        <td>password</td>
+                        <td>string</td>
+                        <td><span class="required">Required</span></td>
+                        <td>User's password</td>
+                    </tr>
+                </table>
+                <h4>Response <span class="status-code status-200">200
+                        OK</span></h4>
+                <div class="code-block">
+                    <pre>
+{
+  "success": true,
+  "message": "Login successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "64f7d1e2b1234567890abcde",
+    "name": "Chef John",
+    "email": "john@example.com",
+    "role": "chef"
+  }
+}
+                    </pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <strong>Get Current User</strong>
+                <div class="endpoint-url">/api/auth/me</div>
+                <p><strong>Authorization:</strong> Bearer token required</p>
+                <h4>Response <span class="status-code status-200">200
+                        OK</span></h4>
+                <div class="code-block">
+                    <pre>
+{
+  "success": true,
+  "user": {
+    "id": "64f7d1e2b1234567890abcde",
+    "name": "Chef John",
+    "email": "john@example.com",
+    "role": "chef",
+    "isActive": true,
+    "createdAt": "2023-09-05T10:30:00Z"
+  }
+}
+                    </pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <span class="method put">PUT</span>
+                <strong>Update Profile</strong>
+                <div class="endpoint-url">/api/auth/profile</div>
+                <p><strong>Authorization:</strong> Bearer token required</p>
+                <h4>Request Body</h4>
+                <table class="params-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>User's full name</td>
+                    </tr>
+                    <tr>
+                        <td>email</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>User's email address</td>
+                    </tr>
+                </table>
+                <h4>Response <span class="status-code status-200">200
+                        OK</span></h4>
+                <div class="code-block">
+                    <pre>
+{
+  "success": true,
+  "message": "Profile updated successfully",
+  "user": {
+    "id": "64f7d1e2b1234567890abcde",
+    "name": "Chef John Updated",
+    "email": "john.updated@example.com",
+    "role": "chef"
+  }
+}
+                    </pre>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>Authorization Header Format</h4>
+                <div class="code-block">
+                    <pre>Authorization: Bearer YOUR_JWT_TOKEN_HERE</pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="recipes">
+            <h2>Recipes</h2>
+            <p>
+                Manage recipes with full CRUD operations, image uploads, and
+                advanced
+                filtering capabilities.
+            </p>
+
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <strong>Get All Recipes</strong>
+                <div class="endpoint-url">/api/recipes</div>
+                <h4>Query Parameters</h4>
+                <table class="params-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>page</td>
+                        <td>number</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Page number (default: 1)</td>
+                    </tr>
+                    <tr>
+                        <td>limit</td>
+                        <td>number</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Items per page (default: 10)</td>
+                    </tr>
+                    <tr>
+                        <td>recipeType</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Filter by recipe type</td>
+                    </tr>
+                    <tr>
+                        <td>dietType</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Filter by diet type</td>
+                    </tr>
+                    <tr>
+                        <td>search</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Search in title and description</td>
+                    </tr>
+                </table>
+                <h4>Response <span class="status-code status-200">200
+                        OK</span></h4>
+                <div class="code-block">
+                    <pre>
+[
+  {
+    "_id": "64f7d1e2b1234567890abcde",
+    "title": "Spicy Chicken Curry",
+    "imageUrl": "https://res.cloudinary.com/.../image.jpg",
+    "recipeType": "main-course",
+    "dietType": "non-vegetarian",
+    "description": "A delicious and spicy chicken curry...",
+    "ingredients": ["500g chicken", "2 onions", "..."],
+    "directions": ["Heat oil in pan", "Add onions", "..."],
+    "tip": "Serve with basmati rice",
+    "createdBy": {
+      "_id": "64f7d1e2b1234567890abcdf",
+      "name": "Chef John",
+      "role": "chef"
+    },
+    "createdAt": "2023-09-05T10:30:00Z",
+    "updatedAt": "2023-09-05T10:30:00Z"
+  }
+]
+                    </pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <strong>Get Single Recipe</strong>
+                <div class="endpoint-url">/api/recipes/:id</div>
+                <h4>Response <span class="status-code status-200">200
+                        OK</span></h4>
+                <div class="code-block">
+                    <pre>
+{
+  "_id": "64f7d1e2b1234567890abcde",
+  "title": "Spicy Chicken Curry",
+  "imageUrl": "https://res.cloudinary.com/.../image.jpg",
+  "recipeType": "main-course",
+  "dietType": "non-vegetarian",
+  "description": "A delicious and spicy chicken curry...",
+  "ingredients": ["500g chicken", "2 onions", "..."],
+  "directions": ["Heat oil in pan", "Add onions", "..."],
+  "tip": "Serve with basmati rice",
+  "createdBy": {
+    "_id": "64f7d1e2b1234567890abcdf",
+    "name": "Chef John",
+    "role": "chef"
+  },
+  "createdAt": "2023-09-05T10:30:00Z",
+  "updatedAt": "2023-09-05T10:30:00Z"
+}
+                    </pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <strong>Get My Recipes</strong>
+                <div class="endpoint-url">/api/recipes/my-recipes</div>
+                <p>
+                    <strong>Authorization:</strong> Bearer token required
+                    (Chef/Admin
+                    only)
+                </p>
+                <h4>Query Parameters</h4>
+                <table class="params-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>page</td>
+                        <td>number</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Page number (default: 1)</td>
+                    </tr>
+                    <tr>
+                        <td>limit</td>
+                        <td>number</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Items per page (default: 10)</td>
+                    </tr>
+                    <tr>
+                        <td>recipeType</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Filter by recipe type</td>
+                    </tr>
+                    <tr>
+                        <td>dietType</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Filter by diet type</td>
+                    </tr>
+                    <tr>
+                        <td>search</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Search in title and description</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <strong>Create Recipe</strong>
+                <div class="endpoint-url">/api/recipes</div>
+                <p>
+                    <strong>Authorization:</strong> Bearer token required
+                    (Chef/Admin
+                    only)
+                </p>
+                <p><strong>Content-Type:</strong> multipart/form-data</p>
+                <h4>Request Body</h4>
+                <table class="params-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>title</td>
+                        <td>string</td>
+                        <td><span class="required">Required</span></td>
+                        <td>Recipe title (max 100 chars)</td>
+                    </tr>
+                    <tr>
+                        <td>image</td>
+                        <td>file</td>
+                        <td><span class="required">Required</span></td>
+                        <td>Recipe image (jpg, jpeg, png, webp)</td>
+                    </tr>
+                    <tr>
+                        <td>recipeType</td>
+                        <td>string</td>
+                        <td><span class="required">Required</span></td>
+                        <td>breakfast, lunch, dinner, snack, dessert,
+                            etc.</td>
+                    </tr>
+                    <tr>
+                        <td>dietType</td>
+                        <td>string</td>
+                        <td><span class="required">Required</span></td>
+                        <td>vegetarian, vegan, non-vegetarian, etc.</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>string</td>
+                        <td><span class="required">Required</span></td>
+                        <td>Recipe description (max 500 chars)</td>
+                    </tr>
+                    <tr>
+                        <td>ingredients</td>
+                        <td>array</td>
+                        <td><span class="required">Required</span></td>
+                        <td>Array of ingredient strings</td>
+                    </tr>
+                    <tr>
+                        <td>directions</td>
+                        <td>array</td>
+                        <td><span class="required">Required</span></td>
+                        <td>Array of direction strings</td>
+                    </tr>
+                    <tr>
+                        <td>tip</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Cooking tip (max 300 chars)</td>
+                    </tr>
+                </table>
+                <h4>
+                    Response <span class="status-code status-201">201
+                        Created</span>
+                </h4>
+                <div class="code-block">
+                    <pre>
+{
+  "success": true,
+  "message": "Recipe created successfully",
+  "data": {
+    "_id": "64f7d1e2b1234567890abcde",
+    "title": "Spicy Chicken Curry",
+    "imageUrl": "https://res.cloudinary.com/.../image.jpg",
+    "recipeType": "main-course",
+    "dietType": "non-vegetarian",
+    "description": "A delicious and spicy chicken curry...",
+    "ingredients": ["500g chicken", "2 onions", "..."],
+    "directions": ["Heat oil in pan", "Add onions", "..."],
+    "tip": "Serve with basmati rice",
+    "createdBy": {
+      "_id": "64f7d1e2b1234567890abcdf",
+      "name": "Chef John",
+      "role": "chef"
+    },
+    "createdAt": "2023-09-05T10:30:00Z",
+    "updatedAt": "2023-09-05T10:30:00Z"
+  }
+}
+                    </pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <span class="method put">PUT</span>
+                <strong>Update Recipe</strong>
+                <div class="endpoint-url">/api/recipes/:id</div>
+                <p>
+                    <strong>Authorization:</strong> Bearer token required
+                    (Owner or
+                    Admin)
+                </p>
+                <p><strong>Content-Type:</strong> multipart/form-data</p>
+                <h4>Request Body</h4>
+                <table class="params-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>title</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Recipe title (max 100 chars)</td>
+                    </tr>
+                    <tr>
+                        <td>image</td>
+                        <td>file</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Recipe image (jpg, jpeg, png, webp)</td>
+                    </tr>
+                    <tr>
+                        <td>recipeType</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>breakfast, lunch, dinner, snack, dessert,
+                            etc.</td>
+                    </tr>
+                    <tr>
+                        <td>dietType</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>vegetarian, vegan, non-vegetarian, etc.</td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Recipe description (max 500 chars)</td>
+                    </tr>
+                    <tr>
+                        <td>ingredients</td>
+                        <td>array</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Array of ingredient strings</td>
+                    </tr>
+                    <tr>
+                        <td>directions</td>
+                        <td>array</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Array of direction strings</td>
+                    </tr>
+                    <tr>
+                        <td>tip</td>
+                        <td>string</td>
+                        <td><span class="optional">Optional</span></td>
+                        <td>Cooking tip (max 300 chars)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="endpoint">
+                <span class="method delete">DELETE</span>
+                <strong>Delete Recipe</strong>
+                <div class="endpoint-url">/api/recipes/:id</div>
+                <p>
+                    <strong>Authorization:</strong> Bearer token required
+                    (Owner or
+                    Admin)
+                </p>
+                <h4>Response <span class="status-code status-200">200
+                        OK</span></h4>
+                <div class="code-block">
+                    <pre>
+{
+  "success": true,
+  "message": "Recipe deleted successfully"
+}
+                    </pre>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>Recipe Ownership</h4>
+                <p>
+                    Chefs can only update/delete their own recipes. Admins
+                    can
+                    update/delete any recipe.
+                </p>
+            </div>
+        </section>
+
+        <section id="user-roles">
+            <h2>User Roles</h2>
+
+            <div class="card">
+                <h3>Admin Role</h3>
+                <ul>
+                    <li>Full access to all recipes (create, read, update,
+                        delete)</li>
+                    <li>Can manage any recipe regardless of creator</li>
+                    <li>User management capabilities</li>
+                </ul>
+
+                <h3>Chef Role</h3>
+                <ul>
+                    <li>Can create new recipes</li>
+                    <li>Can view all recipes</li>
+                    <li>Can only update/delete their own recipes</li>
+                    <li>Access to personal recipe dashboard</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>Role-Based Access Control</h4>
+                    <p>
+                        The API automatically enforces role-based
+                        permissions.
+                        Unauthorized access attempts will return a 403
+                        Forbidden response.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="data-models">
+            <h2>Data Models</h2>
+
+            <h3>User Model</h3>
+            <div class="code-block">
+                <pre>
+{
+  "_id": "ObjectId",
+  "name": "string (required, max 50 chars)",
+  "email": "string (required, unique, valid email)",
+  "password": "string (required, min 6 chars, hashed)",
+  "role": "string (required, enum: ['admin', 'chef'])",
+  "isActive": "boolean (default: true)",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+                </pre>
+            </div>
+
+            <h3>Recipe Model</h3>
+            <div class="code-block">
+                <pre>
+{
+  "_id": "ObjectId",
+  "title": "string (required, max 100 chars)",
+  "imageUrl": "string (required, valid image URL)",
+  "recipeType": "string (required, enum: [
+    'breakfast', 'lunch', 'dinner', 'snack',
+    'dessert', 'appetizer', 'main-course',
+    'side-dish', 'salad', 'soup'
+  ])",
+  "dietType": "string (required, enum: [
+    'vegetarian', 'vegan', 'non-vegetarian',
+    'gluten-free', 'keto', 'paleo', 'dairy-free'
+  ])",
+  "description": "string (required)",
+  "ingredients": "array (required)",
+  "directions": "array (required)",
+  "tip": "string (optional)",
+  "createdBy": {
+    "_id": "ObjectId",
+    "name": "string",
+    "role": "string"
+  },
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+                </pre>
+            </div>
+        </section>
+
+        <section id="error-handling">
+            <h2>Error Handling</h2>
+            <p>
+                The API uses conventional HTTP response codes and returns
+                detailed
+                error messages in JSON format.
+            </p>
+
+            <h3>HTTP Status Codes</h3>
+            <table class="params-table">
+                <tr>
+                    <th>Status Code</th>
+                    <th>Meaning</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><span class="status-code status-200">200</span></td>
+                    <td>OK</td>
+                    <td>Request successful</td>
+                </tr>
+                <tr>
+                    <td><span class="status-code status-201">201</span></td>
+                    <td>Created</td>
+                    <td>Resource created successfully</td>
+                </tr>
+                <tr>
+                    <td><span class="status-code status-400">400</span></td>
+                    <td>Bad Request</td>
+                    <td>Invalid request data</td>
+                </tr>
+                <tr>
+                    <td><span class="status-code status-401">401</span></td>
+                    <td>Unauthorized</td>
+                    <td>Authentication required</td>
+                </tr>
+                <tr>
+                    <td><span class="status-code status-403">403</span></td>
+                    <td>Forbidden</td>
+                    <td>Not authorized to access resource</td>
+                </tr>
+                <tr>
+                    <td><span class="status-code status-404">404</span></td>
+                    <td>Not Found</td>
+                    <td>Resource not found</td>
+                </tr>
+                <tr>
+                    <td><span class="status-code status-500">500</span></td>
+                    <td>Server Error</td>
+                    <td>Internal server error</td>
+                </tr>
+            </table>
+
+            <h3>Error Response Format</h3>
+            <div class="code-block">
+                <pre>
+{
+  "success": false,
+  "message": "Error description",
+  "errors": ["Detailed error messages"] // For validation errors
+}
+                </pre>
+            </div>
+
+            <h3>Common Error Examples</h3>
+            <h4>
+                Validation Error <span class="status-code status-400">400</span>
+            </h4>
+            <div class="code-block">
+                <pre>
+{
+  "success": false,
+  "message": "Validation Error",
+  "errors": [
+    "Please provide a recipe title",
+    "Recipe type must be one of: breakfast, lunch, dinner..."
+  ]
+}
+                </pre>
+            </div>
+
+            <h4>
+                Authentication Error <span class="status-code status-401">401</span>
+            </h4>
+            <div class="code-block">
+                <pre>
+{
+  "success": false,
+  "message": "Not authorized to access this route"
+}
+                </pre>
+            </div>
+        </section>
+
+        <div class="footer">
+            <p>&copy; 2025 SpoonSage API Documentation</p>
+            <p>For support, contact:
+                <a href="mailto:contact.spoonsage@gmail.com"
+                    class="email-link"><strong>contact.spoonsage@gmail.com</strong></a>
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

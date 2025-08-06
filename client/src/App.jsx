@@ -1,12 +1,9 @@
-import SpoonSageLogo from './assets/SpoonSage.svg'
+import Navbar from "./components/Navbar"
 
 function App() {
   return (
     <>
-        <a href="" target="_blank">
-          <img src={SpoonSageLogo} className="logo react" alt="React logo" />
-        </a>
-        <h1 className='underline'>SpoonSage</h1>
+        <Navbar />
     </>
   )
 }

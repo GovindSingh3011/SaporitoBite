@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { Link } from "react-router-dom";
 import SpoonSageLogo from '../assets/SpoonSage.svg';
 
 export default function Navbar() {
@@ -93,13 +94,13 @@ export default function Navbar() {
                                         All Recipes
                                     </a>
                                     {dropdownRecipes.map((type) => (
-                                        <a
+                                        <Link
                                             key={type}
-                                            href={`/recipes?recipeType=${encodeURIComponent(type)}`}
+                                            to={`/recipes/type/${encodeURIComponent(type)}`}
                                             className="px-5 py-3 text-black text-base hover:bg-[#f5f2ee] hover:text-[#bfa074] transition-colors"
                                         >
                                             {type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')}
-                                        </a>
+                                        </Link>
                                     ))}
                                 </div>
                             )}
@@ -142,13 +143,13 @@ export default function Navbar() {
                                             All Recipes
                                         </a>
                                         {dropdownRecipes.map((type) => (
-                                            <a
+                                            <Link
                                                 key={type}
-                                                href={`/recipes?recipeType=${encodeURIComponent(type)}`}
+                                                to={`/recipes/type/${encodeURIComponent(type)}`}
                                                 className="text-black text-base hover:text-[#bfa074] transition-colors block py-2"
                                             >
-                                                {type}
-                                            </a>
+                                                {type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')}
+                                            </Link>
                                         ))}
                                     </div>
                                 )}

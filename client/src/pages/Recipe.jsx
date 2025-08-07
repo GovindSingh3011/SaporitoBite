@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import RandomRecipes from '../components/RandomRecipes';
 
 function Recipe() {
     const [recipe, setRecipe] = useState(null);
@@ -68,7 +69,7 @@ function Recipe() {
 
                     {/* Recipe Details */}
                     <div>
-                        <h1 className="text-6xl font-bold mt-12 mb-6">{recipe.title}</h1>
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mt-12 mb-6">{recipe.title}</h1>
                         {/* Recipe Tags */}
                         <div className="mb-6">
                             <div className="flex gap-2 flex-wrap">
@@ -121,6 +122,11 @@ function Recipe() {
                         <p className="text-center text-lg">{recipe.tip}</p>
                     </div>
                 )}
+
+                {/* More Recipes Section */}
+                <div className="mt-16 mb-12 border-t pt-8">
+                    <RandomRecipes count={6} dietType={recipe.dietTypes?.[0]} />
+                </div>
             </div>
         </div>
     );

@@ -8,7 +8,11 @@ const RecipeCard = ({ recipe }) => {
     };
 
     return (
-        <Link to={`/recipe/${recipe._id}`} className="group">
+        <Link
+            to={`/recipe/${recipe._id}`}
+            className="group"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
             <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div className="h-64 overflow-hidden">
                     <img

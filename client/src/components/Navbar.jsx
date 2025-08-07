@@ -138,7 +138,7 @@ export default function Navbar() {
                                     <div className="pl-4 flex flex-col gap-2 mt-2">
                                         <a
                                             href="/recipes"
-                                            className="text-black text-base hover:text-[#bfa074] transition-colors block py-2"
+                                            className="text-black textbase hover:text-[#bfa074] transition-colors block py-2"
                                         >
                                             All Recipes
                                         </a>
@@ -147,6 +147,7 @@ export default function Navbar() {
                                                 key={type}
                                                 to={`/recipes/type/${encodeURIComponent(type)}`}
                                                 className="text-black text-base hover:text-[#bfa074] transition-colors block py-2"
+                                                onClick={() => setMobileMenuOpen(false)}
                                             >
                                                 {type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')}
                                             </Link>

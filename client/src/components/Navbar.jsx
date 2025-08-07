@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
 import { Link } from "react-router-dom";
 import SpoonSageLogo from '../assets/SpoonSage.svg';
+import SubscribeModal from './SubscribeModal';
 
 export default function Navbar() {
     const [showRecipes, setShowRecipes] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [showSubscribe, setShowSubscribe] = useState(false);
     const [dropdownRecipes] = useState([
         'breakfast',
         'lunch',
@@ -112,7 +114,12 @@ export default function Navbar() {
                             <a href="/about" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors">About</a>
                         </li>
                         <li>
-                            <button className="bg-black text-white px-5 py-1 text-lg rounded hover:bg-[#bfa074] hover:text-black transition-colors">
+                            <button className="bg-black text-white px-5 py-1 text-lg rounded hover:bg-[#bfa074] hover:text-black transition-colors"
+                                onClick={() => {
+                                    setShowSubscribe(true);
+                                    setMobileMenuOpen(false);
+                                }}
+                            >
                                 Subscribe
                             </button>
                         </li>
@@ -162,7 +169,13 @@ export default function Navbar() {
                                 <a href="/about" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors block py-2">About</a>
                             </li>
                             <li className="mt-2">
-                                <button className="w-full bg-black text-white py-2 text-lg rounded hover:bg-[#bfa074] hover:text-black transition-colors">
+                                <button
+                                    className="w-full bg-black text-white py-2 text-lg rounded hover:bg-[#bfa074] hover:text-black transition-colors"
+                                    onClick={() => {
+                                        setShowSubscribe(true);
+                                        setMobileMenuOpen(false);
+                                    }}
+                                >
                                     Subscribe
                                 </button>
                             </li>
@@ -173,6 +186,7 @@ export default function Navbar() {
             <div className="w-full flex justify-center">
                 <div className="w-[97%] h-px bg-black rounded-full" />
             </div>
+            {showSubscribe && <SubscribeModal onClose={() => setShowSubscribe(false)} />}
         </>
     );
 }

@@ -110,7 +110,7 @@ export default function Footer() {
 
             <button
                 onClick={handleBackToTop}
-                className="fixed bottom-8 right-8 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-white text-black border-2 border-black shadow-lg hover:bg-gray-100 transition-all hover:shadow-xl focus:outline-none transform hover:-translate-y-1"
+                className="fixed bottom-8 right-8 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-[#f5f2ee] text-black border-2 border-black shadow-lg hover:bg-gray-100 transition-all hover:shadow-xl focus:outline-none transform hover:-translate-y-1"
                 aria-label="Scroll back to top"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

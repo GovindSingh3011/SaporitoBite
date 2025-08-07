@@ -50,7 +50,7 @@ function Recipe() {
     if (!recipe) return <div className="min-h-screen flex items-center justify-center">Recipe not found</div>;
 
     return (
-        <div className="min-h-screen bg-[#f5f5f5] text-[#333]">
+        <div className="min-h-screen text-[#333]">
             {/* Breadcrumb Navigation */}
             <div className="px-8 py-4 text-gray-600">
                 <Link to="/" className="hover:underline">Home</Link> &gt; <Link to="/recipes" className="hover:underline">Recipes</Link> &gt; <span>{recipe.title}</span>

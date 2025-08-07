@@ -11,8 +11,8 @@ export default function Navbar() {
         'snack',
         'dessert',
         'appetizer',
-        'main-course',
-        'side-dish',
+        'mains',
+        'sides',
         'salad',
         'soup'
     ]);
@@ -98,7 +98,7 @@ export default function Navbar() {
                                             href={`/recipes?recipeType=${encodeURIComponent(type)}`}
                                             className="px-5 py-3 text-black text-base hover:bg-[#f5f2ee] hover:text-[#bfa074] transition-colors"
                                         >
-                                            {type}
+                                            {type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')}
                                         </a>
                                     ))}
                                 </div>

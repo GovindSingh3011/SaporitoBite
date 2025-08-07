@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import RecipeCard from '../components/RecipeCard';
 import axios from 'axios';
 
-const Recipes = () => {
+const AllRecipes = () => {
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -109,4 +109,4 @@ const Recipes = () => {
     );
 };
 
-export default Recipes;
+export default AllRecipes;

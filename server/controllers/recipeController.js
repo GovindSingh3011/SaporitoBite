@@ -10,8 +10,8 @@ const getRecipes = async (req, res) => {
 
         // Build filter object
         const filter = {};
-        if (recipeType) filter.recipeType = recipeType;
-        if (dietType && dietType !== 'none') filter.dietType = dietType;
+        if (recipeType) filter.recipeTypes = { $in: [recipeType] };
+        if (dietType && dietType !== 'none') filter.dietTypes = { $in: [dietType] };
         if (search) {
             filter.$or = [
                 { title: { $regex: search, $options: 'i' } },
@@ -111,28 +111,23 @@ const getMyRecipes = async (req, res) => {
 // @access  Private (Chef/Admin)
 const createRecipe = async (req, res) => {
     try {
-        const { title, recipeType, dietType, description, ingredients, directions, tip } = req.body;
+        // Ensure fields are arrays
+        const recipeTypes = Array.isArray(req.body.recipeTypes)
+            ? req.body.recipeTypes
+            : [req.body.recipeTypes];
 
-        // Get image URL from Cloudinary upload (if image was uploaded)
-        let imageUrl = '';
-        if (req.file) {
-            imageUrl = req.file.path; // Cloudinary URL
-        }
+        const dietTypes = Array.isArray(req.body.dietTypes)
+            ? req.body.dietTypes
+            : [req.body.dietTypes];
 
+        // Create the recipe using the normalized arrays and set createdBy
         const recipe = await Recipe.create({
-            title,
-            imageUrl,
-            recipeType,
-            dietType,
-            description,
-            ingredients,
-            directions,
-            tip,
+            ...req.body,
+            recipeTypes,
+            dietTypes,
+            imageUrl: req.file ? req.file.path : req.body.imageUrl,
             createdBy: req.user.id
         });
-
-        // Populate the created recipe with user info
-        await recipe.populate('createdBy', 'name role');
 
         res.status(201).json({
             success: true,
@@ -140,20 +135,7 @@ const createRecipe = async (req, res) => {
             data: recipe
         });
     } catch (error) {
-        console.error('Error creating recipe:', error);
-        if (error.name === 'ValidationError') {
-            const messages = Object.values(error.errors).map(val => val.message);
-            return res.status(400).json({
-                success: false,
-                message: 'Validation Error',
-                errors: messages
-            });
-        }
-        res.status(500).json({
-            success: false,
-            message: 'Server Error',
-            error: error.message
-        });
+        res.status(400).json({ success: false, message: error.message });
     }
 };
 
@@ -179,8 +161,20 @@ const updateRecipe = async (req, res) => {
             });
         }
 
-        // Handle image replacement
+        // Normalize recipeTypes and dietTypes to arrays if present in the request
         let updateData = { ...req.body, updatedBy: req.user.id };
+
+        if (updateData.recipeTypes) {
+            updateData.recipeTypes = Array.isArray(updateData.recipeTypes)
+                ? updateData.recipeTypes
+                : [updateData.recipeTypes];
+        }
+
+        if (updateData.dietTypes) {
+            updateData.dietTypes = Array.isArray(updateData.dietTypes)
+                ? updateData.dietTypes
+                : [updateData.dietTypes];
+        }
 
         // If a new image is uploaded
         if (req.file) {
@@ -192,7 +186,6 @@ const updateRecipe = async (req, res) => {
                     // Continue with update even if old image deletion fails
                 }
             }
-
             // Set new image URL
             updateData.imageUrl = req.file.path;
         }

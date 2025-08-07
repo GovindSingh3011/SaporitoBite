@@ -17,20 +17,36 @@ const recipeSchema = new mongoose.Schema({
             message: 'Please provide a valid image URL ending with .jpg, .jpeg, .png, .gif, or .webp'
         }
     },
-    recipeType: {
-        type: String,
-        required: [true, 'Please specify the recipe type'],
-        enum: {
-            values: ['breakfast', 'lunch', 'dinner', 'snack', 'dessert', 'appetizer', 'main-course', 'side-dish', 'salad', 'soup'],
-            message: 'Recipe type must be one of: breakfast, lunch, dinner, snack, dessert, appetizer, main-course, side-dish, salad, soup'
+    recipeTypes: {
+        type: [{
+            type: String,
+            enum: {
+                values: ['breakfast', 'lunch', 'dinner', 'snack', 'dessert', 'appetizer', 'main-course', 'side-dish', 'salad', 'soup'],
+                message: 'Recipe types must be from the allowed list'
+            }
+        }],
+        required: true,
+        validate: {
+            validator: function (arr) {
+                return Array.isArray(arr) && arr.length > 0;
+            },
+            message: 'At least one recipe type is required'
         }
     },
-    dietType: {
-        type: String,
-        required: [true, 'Please specify the diet type'],
-        enum: {
-            values: ['vegetarian', 'vegan', 'non-vegetarian', 'gluten-free', 'keto', 'paleo', 'dairy-free'],
-            message: 'Diet type must be one of: vegetarian, vegan, non-vegetarian, gluten-free, keto, paleo, dairy-free'
+    dietTypes: {
+        type: [{
+            type: String,
+            enum: {
+                values: ['vegetarian', 'vegan', 'non-vegetarian', 'gluten-free', 'keto', 'paleo', 'dairy-free'],
+                message: 'Diet types must be from the allowed list'
+            }
+        }],
+        required: true,
+        validate: {
+            validator: function (arr) {
+                return Array.isArray(arr) && arr.length > 0;
+            },
+            message: 'At least one diet type is required'
         }
     },
     description: {

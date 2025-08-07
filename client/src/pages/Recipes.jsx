@@ -12,7 +12,7 @@ const Recipes = () => {
     const recipeTypes = ['breakfast', 'lunch', 'dinner', 'snack', 'dessert', 'appetizer', 'mains', 'sides', 'salad', 'soup'];
     const dietTypes = ['vegetarian', 'vegan', 'non-vegetarian', 'gluten-free', 'keto', 'paleo', 'dairy-free'];
 
-    const BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:5000';
+    const BASE_URL = import.meta.env.VITE_APP_API_URL;
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -41,7 +41,7 @@ const Recipes = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#f5f2ee] text-black py-6">
+        <div className="min-h-screen bg-[#f5f2ee] text-black py-6 pb-20">
             <div className=" py-8 mb-4">
                 <h1 className="text-7xl font-serif text-center">Recipes</h1>
                 <div className="w-1/3 h-px bg-black mx-auto mt-6"></div>

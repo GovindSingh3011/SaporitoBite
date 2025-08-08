@@ -22,8 +22,7 @@ function Recipe() {
                 }
 
                 const result = await response.json();
-                console.log('Recipe API response:', result); // Debug the response
-
+   
                 // Check if the response has a data property
                 if (result.data) {
                     setRecipe(result.data);  // Use result.data instead of data directly

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 export default function SubscribeForm({ variant = 'dark' }) {
     const [name, setName] = useState('');
@@ -13,7 +14,7 @@ export default function SubscribeForm({ variant = 'dark' }) {
         setLoading(true);
 
         try {
-            const apiBaseUrl = import.meta.env.VITE_APP_API_URL || '';
+            const apiBaseUrl = import.meta.env.VITE_APP_API_URL;
             const response = await fetch(`${apiBaseUrl}/api/subscribe`, {
                 method: 'POST',
                 headers: {
@@ -25,6 +26,13 @@ export default function SubscribeForm({ variant = 'dark' }) {
             const data = await response.json();
 
             if (response.ok) {
+                await emailjs.send(
+                    'service_bzp72xp',
+                    'template_2vzasqj',
+                    { user_name: name, user_email: email },
+                    'a2DeFsa-QNDsdXY15'
+                );
+
                 setStatus({ success: true, message: 'Successfully subscribed!' });
                 setName('');
                 setEmail('');

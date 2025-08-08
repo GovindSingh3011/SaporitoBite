@@ -9,7 +9,7 @@ const connectDB = require('./config/database');
 const recipeRoutes = require('./routes/recipes');
 const authRoutes = require('./routes/auth');
 const errorHandler = require('./middleware/errorHandler');
-const subscribeRoutes = require('./routes/subscribe');
+const subscribeRoutes = require('./routes/subscriber');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 // API Routes
 app.use('/api/recipes', recipeRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/subscribe', subscribeRoutes);
+app.use('/api/subscriber', subscribeRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {

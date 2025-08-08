@@ -15,7 +15,7 @@ export default function SubscribeForm({ variant = 'dark' }) {
 
         try {
             const apiBaseUrl = import.meta.env.VITE_APP_API_URL;
-            const response = await fetch(`${apiBaseUrl}/api/subscribe`, {
+            const response = await fetch(`${apiBaseUrl}/api/subscriber`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -6,6 +6,6 @@ router.get('/', getSubscribers);
 
 router.post('/', addSubscriber);
 
-router.delete('/', deleteSubscriber);
+router.delete('/unsubscribe', deleteSubscriber);
 
 module.exports = router;

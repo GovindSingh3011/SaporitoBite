@@ -27,7 +27,7 @@ exports.addSubscriber = async (req, res) => {
 };
 
 exports.deleteSubscriber = async (req, res) => {
-    const { email } = req.body;
+    const { email } = req.query;
     if (!email) {
         return res.status(400).json({ success: false, message: 'Email is required.' });
     }

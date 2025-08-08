@@ -43,7 +43,7 @@ export default function SubscribeForm({ variant = 'dark' }) {
             {isGold && (
                 <div className="text-center mb-8">
                     <h2 className="text-lg font-medium uppercase tracking-wider">STAY IN TOUCH</h2>
-                    <h3 className="text-4xl md:text-5xl font-serif mt-4 mb-6">
+                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif mt-4 mb-6">
                         Subscribe for Recipes, Tips, and Inspiration Delivered Fresh to Your Inbox!
                     </h3>
                 </div>

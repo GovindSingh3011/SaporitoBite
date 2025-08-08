@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import RandomRecipes from '../components/RandomRecipes';
+import SubscribeForm from '../components/SubscribeForm';
 
 function Recipe() {
     const [recipe, setRecipe] = useState(null);
@@ -94,7 +95,7 @@ function Recipe() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 border-t pt-12">
                     {/* Ingredients */}
                     <div>
-                        <h2 className="text-4xl font-bold mb-6">Ingredients</h2>
+                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6">Ingredients</h2>
                         <ul className="list-disc pl-5 space-y-3">
                             {recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
                                 <li key={index} className="text-lg">
@@ -106,7 +107,7 @@ function Recipe() {
 
                     {/* Directions */}
                     <div>
-                        <h2 className="text-4xl font-bold mb-6">Directions</h2>
+                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6">Directions</h2>
                         <ol className="list-decimal pl-5 space-y-4">
                             {recipe.directions && recipe.directions.map((step, index) => (
                                 <li key={index} className="text-lg">{step}</li>
@@ -118,10 +119,15 @@ function Recipe() {
                 {/* Chef's Tip */}
                 {recipe.tip && (
                     <div className="mt-12 border p-8 mb-12">
-                        <h2 className="text-4xl font-bold text-center mb-4">Chef's Tip</h2>
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4">Chef's Tip</h2>
                         <p className="text-center text-lg">{recipe.tip}</p>
                     </div>
                 )}
+
+                {/* Subscribe Form */}
+                <div className="my-12 flex justify-center">
+                    <SubscribeForm variant="gold" />
+                </div>
 
                 {/* More Recipes Section */}
                 <div className="mt-16 mb-12 border-t pt-8">

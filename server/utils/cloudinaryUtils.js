@@ -4,7 +4,7 @@ const cloudinary = require('../config/cloudinary');
 const extractPublicId = (imageUrl) => {
     try {
         // Extract public ID from Cloudinary URL
-        // Example URL: https://res.cloudinary.com/cloud-name/image/upload/v1234567890/spoonsage/recipes/abc123.jpg
+        // Example URL: https://res.cloudinary.com/cloud-name/image/upload/v1234567890/SaporitoBite/recipes/abc123.jpg
         const parts = imageUrl.split('/');
         const uploadIndex = parts.indexOf('upload');
 

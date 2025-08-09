@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { Link } from "react-router-dom";
-import SpoonSageLogo from '../assets/SpoonSage.svg';
+import SaporitoBiteLogo from '../assets/SaporitoBiteBlack.svg';
 import SubscribeModal from './SubscribeModal';
 
 export default function Navbar() {
@@ -48,7 +48,7 @@ export default function Navbar() {
             <nav className="flex items-center justify-between bg-[#f5f2ee] h-15 px-4 md:px-10 font-serif relative">
                 {/* Logo - always visible */}
                 <a href="/" className="z-20">
-                    <img src={SpoonSageLogo} alt="SpoonSage Logo" className="h-8 md:h-10 cursor-pointer" />
+                    <img src={SaporitoBiteLogo} alt="SaporitoBite Logo" className="h-8 md:h-10 cursor-pointer" />
                 </a>
 
                 {/* Mobile menu button */}

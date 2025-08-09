@@ -38,7 +38,7 @@ export default function UnsubscribeForm() {
             <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
                 <div className="text-center p-8 bg-white rounded-lg shadow-md max-w-md w-full">
                     <div className="mb-6">
-                        <h2 className="text-2xl font-bold text-amber-700">SpoonSage</h2>
+                        <h2 className="text-2xl font-bold text-amber-700">SaporitoBite</h2>
                     </div>
                     <div className="text-red-600 mb-6">Invalid unsubscribe link.</div>
                     <p className="mb-6">The unsubscribe link appears to be missing an email address.</p>
@@ -55,7 +55,7 @@ export default function UnsubscribeForm() {
             <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-md">
                 <div className="text-center mb-8">
                     <div className="mb-3">
-                        <h2 className="text-2xl font-bold text-amber-700">SpoonSage</h2>
+                        <h2 className="text-2xl font-bold text-amber-700">SaporitoBite</h2>
                     </div>
                     <h1 className="text-2xl font-bold mb-2">Unsubscribe Confirmation</h1>
                     <div className="w-16 h-1 bg-amber-700 mx-auto mb-4"></div>
@@ -79,7 +79,7 @@ export default function UnsubscribeForm() {
                 ) : (
                     <>
                         <p className="mb-6 text-center text-gray-700">
-                            Are you sure you want to unsubscribe <span className="font-semibold">{email}</span> from SpoonSage email communications?
+                            Are you sure you want to unsubscribe <span className="font-semibold">{email}</span> from SaporitoBite email communications?
                         </p>
                         <form onSubmit={handleUnsubscribe} className="flex flex-col items-center">
                             <button
@@ -114,8 +114,8 @@ export default function UnsubscribeForm() {
                             <h3 className="text-sm font-semibold text-gray-700 mb-2">Why are you unsubscribing?</h3>
                             <p className="text-sm text-gray-600 mb-4">
                                 If you have any feedback about our emails or content, we'd love to hear from you. Email us at{" "}
-                                <a href="mailto:contact.spoonsage@gmail.com" className="text-amber-700 hover:underline">
-                                    contact.spoonsage@gmail.com
+                                <a href="mailto:contact.saporitobite@gmail.com" className="text-amber-700 hover:underline">
+                                    contact.saporitobite@gmail.com
                                 </a>
                             </p>
                         </div>

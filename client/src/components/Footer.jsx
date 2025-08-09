@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import SubscribeForm from './SubscribeForm';
-import SpoonSageLogo from '../assets/SpoonSageWhite.svg';
+import SaporitoBiteLogo from '../assets/SaporitoBiteWhite.svg';
 
 export default function Footer() {
     const handleBackToTop = () => {
@@ -14,7 +14,7 @@ export default function Footer() {
 
                     <div className="flex flex-col space-y-4">
                         <Link to="/" className="mb-4 inline-block">
-                            <img src={SpoonSageLogo} alt="SpoonSage Logo" className="h-10" />
+                            <img src={SaporitoBiteLogo} alt="SaporitoBite Logo" className="h-10" />
                         </Link>
 
 
@@ -104,7 +104,7 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className="mt-8 text-sm text-gray-400 text-center">
-                    &copy; {new Date().getFullYear()} SpoonSage. All rights reserved.
+                    &copy; {new Date().getFullYear()} SaporitoBite. All rights reserved.
                 </div>
             </div>
 

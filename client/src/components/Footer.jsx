@@ -1,20 +1,31 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import SubscribeForm from './SubscribeForm';
 import SaporitoBiteLogo from '../assets/SaporitoBiteWhite.svg';
 
 export default function Footer() {
+    const [showBackToTop, setShowBackToTop] = useState(false);
+
     const handleBackToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowBackToTop(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
-        <footer className="bg-[#202020] text-white pt-12 pb-6 px-4 md:px-8 lg:px-16" aria-label="Footer">
+        <footer className="bg-[#202020] text-white pt-5 pb-6 px-4 md:px-8 lg:px-16" aria-label="Footer">
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
 
                     <div className="flex flex-col space-y-4">
                         <Link to="/" className="mb-4 inline-block">
-                            <img src={SaporitoBiteLogo} alt="SaporitoBite Logo" className="h-10" />
+                            <img src={SaporitoBiteLogo} alt="SaporitoBite Logo" className="h-20 cursor-pointer" />
                         </Link>
 
 
@@ -108,15 +119,20 @@ export default function Footer() {
                 </div>
             </div>
 
-            <button
-                onClick={handleBackToTop}
-                className="fixed bottom-8 right-8 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-[#f5f2ee] text-black border-2 border-black shadow-lg hover:bg-gray-100 transition-all hover:shadow-xl focus:outline-none transform hover:-translate-y-1"
-                aria-label="Scroll back to top"
+            <div
+                className={`fixed bottom-8 right-8 z-50 transition-all duration-300 transform ${showBackToTop ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'
+                    }`}
             >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                </svg>
-            </button>
+                <button
+                    onClick={handleBackToTop}
+                    className="flex items-center justify-center w-12 h-12 rounded-full bg-[#f5f2ee] text-black border-2 border-black shadow-lg hover:bg-gray-100 transition-all duration-300 hover:shadow-xl focus:outline-none hover:-translate-y-1"
+                    aria-label="Scroll back to top"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                    </svg>
+                </button>
+            </div>
         </footer>
     );
 }

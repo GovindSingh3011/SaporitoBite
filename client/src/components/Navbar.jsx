@@ -45,10 +45,14 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="flex items-center justify-between bg-[#f5f2ee] h-15 px-4 md:px-10 font-serif relative">
+            <nav className="fixed top-0 left-0 w-full z-30 flex items-center justify-between bg-[#f5f2ee] h-15 px-4 md:px-10">
                 {/* Logo - always visible */}
-                <a href="/" className="z-20">
-                    <img src={SaporitoBiteLogo} alt="SaporitoBite Logo" className="h-8 md:h-10 cursor-pointer" />
+                <a href="/" className="z-20 flex items-center">
+                    <img
+                        src={SaporitoBiteLogo}
+                        alt="SaporitoBite Logo"
+                        className="h-16 cursor-pointer mx-2 py-0.5"
+                    />
                 </a>
 
                 {/* Mobile menu button */}
@@ -182,10 +186,10 @@ export default function Navbar() {
                         </ul>
                     </div>
                 )}
+                <div className="w-full flex justify-center absolute bottom-0 left-0">
+                    <div className="w-[97%] h-px bg-black rounded-full" />
+                </div>
             </nav>
-            <div className="w-full flex justify-center">
-                <div className="w-[97%] h-px bg-black rounded-full" />
-            </div>
             {showSubscribe && <SubscribeModal onClose={() => setShowSubscribe(false)} />}
         </>
     );

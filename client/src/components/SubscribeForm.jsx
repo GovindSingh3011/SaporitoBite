@@ -27,10 +27,10 @@ export default function SubscribeForm({ variant = 'dark' }) {
 
             if (response.ok) {
                 await emailjs.send(
-                    'service_bzp72xp',
-                    'template_2vzasqj',
+                    import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                    import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
                     { user_name: name, user_email: email },
-                    'a2DeFsa-QNDsdXY15'
+                    import.meta.env.VITE_EMAILJS_PUBLIC_KEY
                 );
 
                 setStatus({ success: true, message: 'Successfully subscribed!' });

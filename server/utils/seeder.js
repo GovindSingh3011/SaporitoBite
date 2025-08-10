@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Recipe = require('../models/Recipe');
 const User = require('../models/User');
+const Subscriber = require('../models/Subscriber');
 require('dotenv').config();
 
 // Sample users data
@@ -253,12 +254,20 @@ const sampleRecipes = [
     }
 ];
 
+const sampleSubscribers = [
+    {
+        name: "Govind",
+        email: "govindrawat3011@gmail.com"
+    }
+];
+
 const seedDatabase = async () => {
     try {
         console.log('🌱 Starting database seeding...');
 
         // Connect to MongoDB
         await mongoose.connect(process.env.MONGODB_URI, {
+            dbName: 'SaporitoBite',
             serverSelectionTimeoutMS: 5000,
             socketTimeoutMS: 45000,
         });
@@ -267,7 +276,8 @@ const seedDatabase = async () => {
         // Clear existing data
         await Recipe.deleteMany({});
         await User.deleteMany({});
-        console.log('🧹 Cleared existing recipes and users');
+        await Subscriber.deleteMany({});
+        console.log('🧹 Cleared existing recipes, users, and subscribers');
 
         // Create users
         const createdUsers = await User.create(sampleUsers);
@@ -307,41 +317,11 @@ const seedDatabase = async () => {
         const insertedRecipes = await Recipe.insertMany(recipesWithUsers);
         console.log(`✅ Inserted ${insertedRecipes.length} sample recipes`);
 
+        // Create subscribers
+        await Subscriber.create(sampleSubscribers);
+        console.log(`✅ Created ${sampleSubscribers.length} subscribers`);
+
         console.log('🎉 Database seeding completed successfully!');
-        console.log('\n👥 Created Users:');
-        createdUsers.forEach((user, index) => {
-            console.log(`${index + 1}. ${user.name} (${user.email}) - ${user.role}`);
-        });
-
-        console.log('\n🍽️ Sample recipes added:');
-        console.log(`📋 Admin recipes (${adminUser.name}):`);
-        const adminRecipes = insertedRecipes.filter(recipe =>
-            recipe.createdBy.toString() === adminUser._id.toString()
-        );
-        adminRecipes.forEach(recipe => {
-            console.log(`   • ${recipe.title} (${recipe.recipeType})`);
-        });
-
-        console.log(`👨‍🍳 Chef Gordon recipes (${chef1User.name}):`);
-        const chef1Recipes = insertedRecipes.filter(recipe =>
-            recipe.createdBy.toString() === chef1User._id.toString()
-        );
-        chef1Recipes.forEach(recipe => {
-            console.log(`   • ${recipe.title} (${recipe.recipeType})`);
-        });
-
-        console.log(`👩‍🍳 Chef Julia recipes (${chef2User.name}):`);
-        const chef2Recipes = insertedRecipes.filter(recipe =>
-            recipe.createdBy.toString() === chef2User._id.toString()
-        );
-        chef2Recipes.forEach(recipe => {
-            console.log(`   • ${recipe.title} (${recipe.recipeType})`);
-        });
-
-        console.log('\n🔑 Login Credentials:');
-        console.log('Admin: admin@saporitobite.com / admin123');
-        console.log('Chef Gordon: gordon@saporitobite.com / chef123');
-        console.log('Chef Julia: julia@saporitobite.com / chef123');
 
         await mongoose.disconnect();
         console.log('🔌 Disconnected from MongoDB');

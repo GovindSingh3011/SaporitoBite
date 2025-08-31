@@ -4,22 +4,25 @@ import SaporitoBiteLogo from '../assets/SaporitoBiteBlack.svg';
 import SubscribeForm from '../components/SubscribeForm';
 
 function Cookbook() {
+    const handleBackToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
     return (
         <div className="min-h-screen bg-[#f5f2ee] text-gray-800 flex flex-col">
             <section className="relative py-20 px-4 flex items-center justify-center min-h-[70vh]">
-                <div className="absolute inset-0 bg-cover bg-center opacity-10" 
+                <div className="absolute inset-0 bg-cover bg-center opacity-10"
                     style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?q=80&w=2070)' }}></div>
-                
+
                 <div className="max-w-4xl mx-auto text-center relative z-10">
-                    <motion.img 
+                    <motion.img
                         initial={{ y: -20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.8 }}
-                        src={SaporitoBiteLogo} 
-                        alt="SaporitoBite Logo" 
-                        className="h-20 sm:h-24 mx-auto mb-8 drop-shadow-lg" 
+                        src={SaporitoBiteLogo}
+                        alt="SaporitoBite Logo"
+                        className="h-20 sm:h-24 mx-auto mb-8 drop-shadow-lg"
                     />
-                    
+
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -28,8 +31,8 @@ function Cookbook() {
                     >
                         <span className="text-[#8b6d39] font-medium">Coming Soon</span>
                     </motion.div>
-                    
-                    <motion.h1 
+
+                    <motion.h1
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
@@ -37,19 +40,19 @@ function Cookbook() {
                     >
                         SaporitoBite Cookbook
                     </motion.h1>
-                    
-                    <motion.div 
+
+                    <motion.div
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.8, delay: 0.4 }}
                     >
                         <div className="w-24 h-1 bg-[#bfa074] mx-auto mb-8"></div>
                         <p className="text-lg text-gray-700 mb-8 leading-relaxed max-w-2xl mx-auto">
-                            We're excited to announce that our first cookbook is in the works! Featuring our most beloved plant-forward recipes, 
+                            We're excited to announce that our first cookbook is in the works! Featuring our most beloved plant-forward recipes,
                             seasonal cooking guides, and exclusive new dishes you won't find on our website.
                         </p>
                     </motion.div>
-                    
+
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -63,7 +66,7 @@ function Cookbook() {
                         </p>
                         <SubscribeForm variant="gold" />
                     </motion.div>
-                    
+
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -72,6 +75,7 @@ function Cookbook() {
                         <Link
                             to="/"
                             className="inline-flex items-center gap-2 border-2 border-[#bfa074] px-8 py-3 rounded-md hover:bg-[#bfa074] hover:text-white transition-colors"
+                            onClick={handleBackToTop}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -81,12 +85,12 @@ function Cookbook() {
                     </motion.div>
                 </div>
             </section>
-            
+
             <section className="py-16 px-4 bg-white">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-center text-[#bfa074] mb-3">What to Expect</h2>
                     <div className="w-16 h-1 bg-[#bfa074] mx-auto mb-12"></div>
-                    
+
                     <div className="grid md:grid-cols-3 gap-8 md:gap-12">
                         {[
                             {
@@ -136,7 +140,7 @@ function Cookbook() {
                     </div>
                 </div>
             </section>
-            
+
         </div>
     );
 }

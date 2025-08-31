@@ -8,6 +8,9 @@ function Recipe() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { id } = useParams();
+    const handleBackToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     const BaseURL = import.meta.env.VITE_APP_API_URL;
 
@@ -22,7 +25,7 @@ function Recipe() {
                 }
 
                 const result = await response.json();
-   
+
                 // Check if the response has a data property
                 if (result.data) {
                     setRecipe(result.data);  // Use result.data instead of data directly
@@ -53,7 +56,7 @@ function Recipe() {
         <div className="min-h-screen text-[#333]">
             {/* Breadcrumb Navigation */}
             <div className="px-8 py-4 text-gray-600">
-                <Link to="/" className="hover:underline">Home</Link> &gt; <Link to="/recipes" className="hover:underline">Recipes</Link> &gt; <span>{recipe.title}</span>
+                <Link to="/" className="hover:underline" onClick={handleBackToTop}>Home</Link> &gt; <Link to="/recipes" className="hover:underline" onClick={handleBackToTop}>Recipes</Link> &gt; <span>{recipe.title}</span>
             </div>
 
             <div className="container mx-auto px-8 py-10">

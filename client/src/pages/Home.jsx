@@ -5,6 +5,9 @@ import SubscribeForm from '../components/SubscribeForm';
 import SaporitoBiteLogo from '../assets/SaporitoBiteBlack.svg';
 
 function Home() {
+    const handleBackToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
     return (
         <div className="min-h-screen bg-[#f5f2ee] text-gray-800">
             <section className="relative h-[70vh] sm:h-[80vh] md:h-[90vh] flex items-center justify-center bg-cover bg-center overflow-hidden"
@@ -40,7 +43,7 @@ function Home() {
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.8, delay: 0.7 }}
                     >
-                        <Link to="/recipes" className="bg-[#bfa074] hover:bg-[#d8b78c] text-white font-medium px-8 sm:px-10 py-3 sm:py-4 rounded-md transition-all duration-300 inline-block shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                        <Link to="/recipes" className="bg-[#bfa074] hover:bg-[#d8b78c] text-white font-medium px-8 sm:px-10 py-3 sm:py-4 rounded-md transition-all duration-300 inline-block shadow-md hover:shadow-lg transform hover:-translate-y-1" onClick={handleBackToTop}>
                             Explore Our Recipes
                         </Link>
                     </motion.div>
@@ -73,7 +76,7 @@ function Home() {
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 key={category}
                             >
-                                <Link to={`/recipes/type/${category}`} className="group block">
+                                <Link to={`/recipes/type/${category}`} className="group block" onClick={handleBackToTop}>
                                     <div className="h-32 sm:h-40 md:h-48 lg:h-56 rounded-xl border-2 border-[#f3e6d2] bg-gradient-to-br from-[#f5f2ee] to-[#f9f6f1] shadow-md flex items-center justify-center group transition-all duration-300 hover:shadow-lg hover:border-[#bfa074] cursor-pointer relative overflow-hidden">
                                         <h3 className="text-[#bfa074] text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif capitalize text-center w-full font-semibold tracking-wide group-hover:text-[#a8844a] transition-colors duration-300">
                                             {category}
@@ -117,6 +120,7 @@ function Home() {
                         <Link
                             to="/recipes"
                             className="inline-block bg-[#bfa074] text-white px-10 py-4 rounded-md hover:bg-[#d8b78c] transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1"
+                            onClick={handleBackToTop}
                         >
                             View All Recipes
                         </Link>
@@ -175,6 +179,7 @@ function Home() {
                         <Link
                             to="/about"
                             className="inline-flex items-center gap-2 border-2 border-[#bfa074] px-8 py-3 rounded-md hover:bg-[#bfa074] hover:text-white transition-colors"
+                            onClick={handleBackToTop}
                         >
                             Learn More About Us
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

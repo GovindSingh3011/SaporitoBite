@@ -37,13 +37,16 @@ const RecipeTypePage = () => {
             });
     }, [type]);
 
+    const handleBackToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
     return (
         <div className="bg-[#f5f2ee] text-black">
             {/* Header Section */}
             <div className="py-10">
                 <div className="max-w-6xl mx-auto px-4">
                     <div className="flex items-center gap-2 mb-3 text-sm">
-                        <Link to="/recipes" className="hover:text-[#bfa074] transition-colors">
+                        <Link to="/recipes" className="hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>
                             All Recipes
                         </Link>
                         <span>›</span>
@@ -86,7 +89,8 @@ const RecipeTypePage = () => {
                                     We couldn't find any {formatTypeTitle(type)} recipes.
                                 </p>
                                 <Link to="/recipes"
-                                    className="inline-block bg-black text-white px-6 py-2 rounded hover:bg-[#bfa074] transition-colors">
+                                    className="inline-block bg-black text-white px-6 py-2 rounded hover:bg-[#bfa074] transition-colors"
+                                    onClick={handleBackToTop}>
                                     Browse All Recipes
                                 </Link>
                             </div>

@@ -5,6 +5,9 @@ export default function UnsubscribeForm() {
     const [email, setEmail] = useState("");
     const [status, setStatus] = useState(null);
     const [loading, setLoading] = useState(false);
+    const handleBackToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -42,7 +45,7 @@ export default function UnsubscribeForm() {
                     </div>
                     <div className="text-red-600 mb-6">Invalid unsubscribe link.</div>
                     <p className="mb-6">The unsubscribe link appears to be missing an email address.</p>
-                    <Link to="/" className="text-amber-700 hover:text-amber-900 font-medium">
+                    <Link to="/" className="text-amber-700 hover:text-amber-900 font-medium" onClick={handleBackToTop}>
                         Return to Homepage
                     </Link>
                 </div>
@@ -72,7 +75,7 @@ export default function UnsubscribeForm() {
                         <p className="mb-6 text-gray-600">
                             We're sorry to see you go. If you change your mind, you can always subscribe again from our website.
                         </p>
-                        <Link to="/" className="text-amber-700 hover:text-amber-900 font-medium">
+                        <Link to="/" className="text-amber-700 hover:text-amber-900 font-medium" onClick={handleBackToTop}>
                             Return to Homepage
                         </Link>
                     </div>
@@ -99,7 +102,7 @@ export default function UnsubscribeForm() {
                                     "Yes, Unsubscribe Me"
                                 )}
                             </button>
-                            <Link to="/" className="mt-4 text-gray-600 hover:text-gray-800">
+                            <Link to="/" className="mt-4 text-gray-600 hover:text-gray-800" onClick={handleBackToTop}>
                                 Cancel
                             </Link>
                         </form>

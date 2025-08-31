@@ -19,6 +19,9 @@ export default function Navbar() {
         'salad',
         'soup'
     ]);
+    const handleBackToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
     const timeoutRef = useRef(null);
 
     const handleMouseEnter = () => {
@@ -47,7 +50,7 @@ export default function Navbar() {
         <>
             <nav className="fixed top-0 left-0 w-full z-30 flex items-center justify-between bg-[#f5f2ee] h-15 px-4 md:px-10">
                 {/* Logo - always visible */}
-                <a href="/" className="z-20 flex items-center">
+                <a href="/" className="z-20 flex items-center" onClick={handleBackToTop}>
                     <img
                         src={SaporitoBiteLogo}
                         alt="SaporitoBite Logo"
@@ -76,14 +79,14 @@ export default function Navbar() {
                 <div className="hidden md:flex flex-1 justify-end">
                     <ul className="flex gap-8 items-center list-none m-0 p-0">
                         <li>
-                            <a href="/" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors">Home</a>
+                            <a href="/" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>Home</a>
                         </li>
                         <li
                             className="relative"
                             onMouseEnter={handleMouseEnter}
                             onMouseLeave={handleMouseLeave}
                         >
-                            <a className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors flex items-center cursor-pointer">
+                            <a className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors flex items-center cursor-pointer" onClick={handleBackToTop}>
                                 Recipes <span className="ml-1">&#9662;</span>
                             </a>
                             {showRecipes && (
@@ -96,6 +99,7 @@ export default function Navbar() {
                                         key="all-recipes"
                                         href="/recipes"
                                         className="px-5 py-3 text-black text-base hover:bg-[#f5f2ee] hover:text-[#bfa074] transition-colors"
+                                        onClick={handleBackToTop}
                                     >
                                         All Recipes
                                     </a>
@@ -104,6 +108,7 @@ export default function Navbar() {
                                             key={type}
                                             to={`/recipes/type/${encodeURIComponent(type)}`}
                                             className="px-5 py-3 text-black text-base hover:bg-[#f5f2ee] hover:text-[#bfa074] transition-colors"
+                                            onClick={handleBackToTop}
                                         >
                                             {type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')}
                                         </Link>
@@ -112,10 +117,10 @@ export default function Navbar() {
                             )}
                         </li>
                         <li>
-                            <a href="/cookbook" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors">CookBook</a>
+                            <a href="/cookbook" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>CookBook</a>
                         </li>
                         <li>
-                            <a href="/about" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors">About</a>
+                            <a href="/about" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>About</a>
                         </li>
                         <li>
                             <button className="bg-black text-white px-5 py-1 text-lg rounded hover:bg-[#bfa074] hover:text-black transition-colors"
@@ -135,7 +140,7 @@ export default function Navbar() {
                     <div className="md:hidden absolute top-0 left-0 w-full bg-[#f5f2ee] z-10 pt-20 pb-6 px-6 shadow-lg">
                         <ul className="flex flex-col gap-4">
                             <li>
-                                <a href="/" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors block py-2">Home</a>
+                                <a href="/" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors block py-2" onClick={handleBackToTop}>Home</a>
                             </li>
                             <li>
                                 <div
@@ -150,6 +155,7 @@ export default function Navbar() {
                                         <a
                                             href="/recipes"
                                             className="text-black textbase hover:text-[#bfa074] transition-colors block py-2"
+                                            onClick={handleBackToTop}
                                         >
                                             All Recipes
                                         </a>
@@ -158,7 +164,7 @@ export default function Navbar() {
                                                 key={type}
                                                 to={`/recipes/type/${encodeURIComponent(type)}`}
                                                 className="text-black text-base hover:text-[#bfa074] transition-colors block py-2"
-                                                onClick={() => setMobileMenuOpen(false)}
+                                                onClick={e => { handleBackToTop(); setMobileMenuOpen(false); }}
                                             >
                                                 {type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')}
                                             </Link>
@@ -167,10 +173,10 @@ export default function Navbar() {
                                 )}
                             </li>
                             <li>
-                                <a href="/cookbook" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors block py-2">CookBook</a>
+                                <a href="/cookbook" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors block py-2" onClick={handleBackToTop}>CookBook</a>
                             </li>
                             <li>
-                                <a href="/about" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors block py-2">About</a>
+                                <a href="/about" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors block py-2" onClick={handleBackToTop}>About</a>
                             </li>
                             <li className="mt-2">
                                 <button

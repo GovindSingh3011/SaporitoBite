@@ -24,7 +24,7 @@ export default function Footer() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
 
                     <div className="flex flex-col space-y-4">
-                        <Link to="/" className="mb-4 inline-block">
+                        <Link to="/" className="mb-4 inline-block" onClick={handleBackToTop}>
                             <img src={SaporitoBiteLogo} alt="SaporitoBite Logo" className="h-20 cursor-pointer" />
                         </Link>
 
@@ -37,17 +37,17 @@ export default function Footer() {
                                 </h4>
                                 <ul className="space-y-3">
                                     <li>
-                                        <Link to="/recipes" className="hover:text-[#bfa074] transition-colors">
+                                        <Link to="/recipes" className="hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>
                                             All Recipes
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/cookbook" className="hover:text-[#bfa074] transition-colors">
+                                        <Link to="/cookbook" className="hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>
                                             CookBook
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/about" className="hover:text-[#bfa074] transition-colors">
+                                        <Link to="/about" className="hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>
                                             About
                                         </Link>
                                     </li>
@@ -60,12 +60,12 @@ export default function Footer() {
                                 </h4>
                                 <ul className="space-y-3">
                                     <li>
-                                        <Link to="/privacy-policy" className="hover:text-[#bfa074] transition-colors">
+                                        <Link to="/privacy-policy" className="hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>
                                             Privacy Policy
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/terms-of-service" className="hover:text-[#bfa074] transition-colors">
+                                        <Link to="/terms-of-service" className="hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>
                                             Terms of Service
                                         </Link>
                                     </li>

@@ -8,6 +8,7 @@ import Recipe from './pages/Recipe';
 import UnsubscribeForm from "./pages/Unsubscribe";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
+import Cookbook from "./pages/Cookbook";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/recipe/:id" element={<Recipe />} />
           <Route path="/unsubscribe" element={<UnsubscribeForm />} />
           <Route path="/about" element={<About />} />
+          <Route path="/cookbook" element={<Cookbook />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

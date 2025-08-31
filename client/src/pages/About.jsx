@@ -104,8 +104,8 @@ function About() {
                 </div>
             </section>
 
-            <section className="py-16 px-4 bg-white">
-                <div className="max-w-6xl mx-auto">
+            <section className="py-16 px-4 bg-white" id="about-creator">
+                <div className="max-w-3xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
@@ -113,68 +113,23 @@ function About() {
                         transition={{ duration: 0.8 }}
                         className="text-center mb-12"
                     >
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-[#bfa074] mb-3">Our Team</h2>
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-[#bfa074] mb-3">About the Creator</h2>
                         <div className="w-16 h-1 bg-[#bfa074] mx-auto mb-6"></div>
-                        <p className="text-gray-700 max-w-2xl mx-auto">
-                            SaporitoBite is created by a small team of passionate food lovers, recipe developers, and photographers dedicated to sharing the joy of cooking.
-                        </p>
-                    </motion.div>
-
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                            className="aspect-square rounded-xl overflow-hidden shadow-lg"
-                        >
-                            <img
-                                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=2070"
-                                alt="Our Team"
-                                className="w-full h-full object-cover"
-                            />
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <h3 className="text-2xl font-serif text-[#bfa074] mb-4">Passionate About Food</h3>
-                            <p className="text-gray-700 mb-6 leading-relaxed">
-                                Behind SaporitoBite is a team of culinary enthusiasts who believe in the power of good food to bring people together. Our recipe developers test each recipe multiple times to ensure they work in home kitchens, while our food photographers capture the beauty of each dish.
-                            </p>
-                            <p className="text-gray-700 mb-6 leading-relaxed">
-                                With backgrounds ranging from professional cooking to nutrition education, our team combines expertise with a genuine love for creating and sharing delicious, nourishing food that celebrates seasonal ingredients and global flavors.
-                            </p>
-                            <div className="flex flex-wrap gap-4">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-[#bfa074] flex items-center justify-center text-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                        </svg>
-                                    </div>
-                                    <p className="text-gray-700">Triple-tested recipes</p>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-[#bfa074] flex items-center justify-center text-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                        </svg>
-                                    </div>
-                                    <p className="text-gray-700">Professional food photography</p>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-[#bfa074] flex items-center justify-center text-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                        </svg>
-                                    </div>
-                                    <p className="text-gray-700">Seasonal ingredient focus</p>
-                                </div>
+                        <div className="flex flex-col items-center justify-center">
+                            <div className="w-32 h-32 rounded-full bg-[#f5f2ee] flex items-center justify-center text-[#bfa074] mb-4 text-5xl border-4 border-[#bfa074]">
+                                <span role="img" aria-label="Govind Singh">GS</span>
                             </div>
-                        </motion.div>
-                    </div>
+                            <h3 className="text-2xl font-serif text-[#bfa074] mb-2">Govind Singh</h3>
+                            <p className="text-gray-700 mb-6 leading-relaxed max-w-xl">
+                                Hi! I'm Govind Singh, the food enthusiast behind SaporitoBite. I design, build, and maintain this platform to share my love for cooking and web development. Explore my work and connect with me below!
+                            </p>
+                            <div className="flex flex-wrap gap-4 justify-center">
+                                <a href="https://govindsingh.me" target="_blank" rel="noopener noreferrer" className="text-[#bfa074] hover:underline font-medium">Portfolio</a>
+                                <a href="https://linkedin.com/in/govindsingh3011" target="_blank" rel="noopener noreferrer" className="text-[#0077b5] hover:underline font-medium">LinkedIn</a>
+                                <a href="https://github.com/GovindSingh3011" target="_blank" rel="noopener noreferrer" className="text-black hover:underline font-medium">GitHub</a>
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
             </section>
 

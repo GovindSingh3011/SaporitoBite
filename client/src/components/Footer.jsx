@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SubscribeForm from './SubscribeForm';
 import SaporitoBiteLogo from '../assets/SaporitoBiteWhite.svg';
 
 export default function Footer() {
     const [showBackToTop, setShowBackToTop] = useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const handleBackToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -17,6 +19,27 @@ export default function Footer() {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    // Scroll to About Creator section
+
+    const handleCreatorClick = (e) => {
+        e.preventDefault();
+        if (location.pathname === '/about') {
+            const el = document.getElementById('about-creator');
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            navigate('/about');
+            // Wait for navigation, then scroll
+            setTimeout(() => {
+                const el = document.getElementById('about-creator');
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 300);
+        }
+    };
 
     return (
         <footer className="bg-[#202020] text-white pt-5 pb-6 px-4 md:px-8 lg:px-16" aria-label="Footer">
@@ -115,7 +138,14 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className="mt-8 text-sm text-gray-400 text-center">
-                    &copy; {new Date().getFullYear()} SaporitoBite. All rights reserved.
+                    &copy; {new Date().getFullYear()} SaporitoBite. All rights reserved.<br />
+                    Creator: <a
+                        href="/about#about-creator"
+                        className="text-[#bfa074] hover:underline font-semibold cursor-pointer"
+                        onClick={handleCreatorClick}
+                    >
+                         Govind Singh
+                    </a>
                 </div>
             </div>
 

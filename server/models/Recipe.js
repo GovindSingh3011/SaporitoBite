@@ -9,13 +9,7 @@ const recipeSchema = new mongoose.Schema({
     },
     imageUrl: {
         type: String,
-        required: [true, 'Please provide an image URL'],
-        validate: {
-            validator: function (v) {
-                return /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i.test(v);
-            },
-            message: 'Please provide a valid image URL ending with .jpg, .jpeg, .png, .gif, or .webp'
-        }
+        required: [true, 'Please provide an image']
     },
     recipeTypes: {
         type: [{

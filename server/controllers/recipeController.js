@@ -79,8 +79,8 @@ const getMyRecipes = async (req, res) => {
 
         // Build filter object - always filter by current user
         const filter = { createdBy: req.user.id };
-        if (recipeType) filter.recipeType = recipeType;
-        if (dietType && dietType !== 'none') filter.dietType = dietType;
+        if (recipeType) filter.recipeTypes = { $in: [recipeType] };
+        if (dietType && dietType !== 'none') filter.dietTypes = { $in: [dietType] };
         if (search) {
             filter.$or = [
                 { title: { $regex: search, $options: 'i' } },

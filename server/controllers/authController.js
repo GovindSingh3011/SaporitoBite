@@ -135,7 +135,7 @@ const login = async (req, res) => {
 const getMe = async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
-        
+
         res.status(200).json({
             success: true,
             user: {
@@ -157,39 +157,43 @@ const getMe = async (req, res) => {
     }
 };
 
-// @desc    Update user profile
-// @route   PUT /api/auth/profile
+// @desc    Change user password
+// @route   PUT /api/auth/password
 // @access  Private
-const updateProfile = async (req, res) => {
+const changePassword = async (req, res) => {
     try {
-        const { name, email } = req.body;
-        
-        const user = await User.findByIdAndUpdate(
-            req.user.id,
-            { name, email },
-            { new: true, runValidators: true }
-        );
+        const { currentPassword, newPassword } = req.body;
+
+        // Validate inputs
+        if (!currentPassword || !newPassword) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide current and new password'
+            });
+        }
+
+        // Get user with password
+        const user = await User.findById(req.user.id).select('+password');
+
+        // Check if current password matches
+        const isMatch = await user.matchPassword(currentPassword);
+        if (!isMatch) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid current password'
+            });
+        }
+
+        // Set new password
+        user.password = newPassword;
+        await user.save();
 
         res.status(200).json({
             success: true,
-            message: 'Profile updated successfully',
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role
-            }
+            message: 'Password changed successfully'
         });
     } catch (error) {
-        console.error('Error in updateProfile:', error);
-        if (error.name === 'ValidationError') {
-            const messages = Object.values(error.errors).map(val => val.message);
-            return res.status(400).json({
-                success: false,
-                message: 'Validation Error',
-                errors: messages
-            });
-        }
+        console.error('Error in changePassword:', error);
         res.status(500).json({
             success: false,
             message: 'Server Error',
@@ -202,5 +206,5 @@ module.exports = {
     register,
     login,
     getMe,
-    updateProfile
+    changePassword
 };

@@ -3,12 +3,17 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Recipes from "./pages/AllRecipes";
 import Home from "./pages/Home";
-import RecipeTypePage from './pages/RecipeTypePage';
-import Recipe from './pages/Recipe';
+import RecipeTypePage from "./pages/RecipeTypePage";
+import Recipe from "./pages/Recipe";
 import UnsubscribeForm from "./pages/Unsubscribe";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Cookbook from "./pages/Cookbook";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import RecipeForm from "./pages/RecipeForm";
+import AuthRoute from "./components/AuthRoute"; // <-- import
 
 function App() {
   return (
@@ -23,6 +28,33 @@ function App() {
           <Route path="/unsubscribe" element={<UnsubscribeForm />} />
           <Route path="/about" element={<About />} />
           <Route path="/cookbook" element={<Cookbook />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          {/* Protected Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <AuthRoute>
+                <Dashboard />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/new-recipe"
+            element={
+              <AuthRoute>
+                <RecipeForm />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/edit-recipe/:id"
+            element={
+              <AuthRoute>
+                <RecipeForm />
+              </AuthRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

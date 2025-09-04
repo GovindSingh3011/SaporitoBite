@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import SaporitoBiteLogo from '../assets/SaporitoBiteBlack.svg';
 import SubscribeModal from './SubscribeModal';
@@ -7,6 +7,7 @@ export default function Navbar() {
     const [showRecipes, setShowRecipes] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showSubscribe, setShowSubscribe] = useState(false);
+    const [userName, setUserName] = useState(null);
     const [dropdownRecipes] = useState([
         'breakfast',
         'lunch',
@@ -45,6 +46,26 @@ export default function Navbar() {
     const toggleMobileRecipes = () => {
         setShowRecipes(!showRecipes);
     };
+
+    useEffect(() => {
+        const updateUser = () => {
+            const user = localStorage.getItem('user');
+            if (user) {
+                try {
+                    const parsed = JSON.parse(user);
+                    setUserName(parsed.name || parsed.email || null);
+                } catch {
+                    setUserName(null);
+                }
+            } else {
+                setUserName(null);
+            }
+        };
+
+        updateUser();
+        window.addEventListener('userChanged', updateUser);
+        return () => window.removeEventListener('userChanged', updateUser);
+    }, []);
 
     return (
         <>
@@ -123,6 +144,24 @@ export default function Navbar() {
                             <a href="/about" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>About</a>
                         </li>
                         <li>
+                            {userName ? (
+                                <a href="/dashboard" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>Dashboard</a>
+                            ) : (
+                                <a href="/register" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>Register as Chef</a>
+                            )}
+                        </li>
+                        <li>
+                            {userName ? (
+                                <span className="text-black text-lg font-medium">
+                                    Welcome, {userName}
+                                </span>
+                            ) : (
+                                <a href="/login" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors" onClick={handleBackToTop}>
+                                    Login
+                                </a>
+                            )}
+                        </li>
+                        <li>
                             <button className="bg-black text-white px-5 py-1 text-lg rounded hover:bg-[#bfa074] hover:text-black transition-colors"
                                 onClick={() => {
                                     setShowSubscribe(true);
@@ -132,6 +171,8 @@ export default function Navbar() {
                                 Subscribe
                             </button>
                         </li>
+
+
                     </ul>
                 </div>
 
@@ -178,6 +219,24 @@ export default function Navbar() {
                             <li>
                                 <a href="/about" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors block py-2" onClick={handleBackToTop}>About</a>
                             </li>
+                            <li>
+                                {userName ? (
+                                    <a href="/dashboard" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors block py-2" onClick={handleBackToTop}>Dashboard</a>
+                                ) : (
+                                    <a href="/register" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors block py-2" onClick={handleBackToTop}>Register as Chef</a>
+                                )}
+                            </li>
+                            <li>
+                                {userName ? (
+                                    <span className="text-black text-lg font-medium block py-2">
+                                        Welcome, {userName}
+                                    </span>
+                                ) : (
+                                    <a href="/login" className="text-black text-lg font-medium hover:text-[#bfa074] transition-colors block py-2" onClick={handleBackToTop}>
+                                        Login
+                                    </a>
+                                )}
+                            </li>
                             <li className="mt-2">
                                 <button
                                     className="w-full bg-black text-white py-2 text-lg rounded hover:bg-[#bfa074] hover:text-black transition-colors"
@@ -189,6 +248,8 @@ export default function Navbar() {
                                     Subscribe
                                 </button>
                             </li>
+
+
                         </ul>
                     </div>
                 )}

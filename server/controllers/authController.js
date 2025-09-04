@@ -56,11 +56,15 @@ const register = async (req, res) => {
                 errors: messages
             });
         }
-        res.status(500).json({
-            success: false,
-            message: 'Server Error',
-            error: error.message
-        });
+        // Handle duplicate key error for username or name
+        if (
+            error.code === 11000 &&
+            error.keyPattern &&
+            (error.keyPattern.username || error.keyPattern.name)
+        ) {
+            return res.status(400).json({ success: false, message: 'Username already exists' });
+        }
+        return res.status(500).json({ success: false, message: 'Server error' });
     }
 };
 

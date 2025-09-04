@@ -73,6 +73,10 @@ function Recipe() {
                     {/* Recipe Details */}
                     <div>
                         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mt-12 mb-6">{recipe.title}</h1>
+                        <div className="mb-4">
+                            <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded mr-1">Uploaded By:</span>
+                            <span className="font-semibold text-gray-800">{recipe.createdBy.name}</span>
+                        </div>
                         {/* Recipe Tags */}
                         <div className="mb-6">
                             <div className="flex gap-2 flex-wrap">

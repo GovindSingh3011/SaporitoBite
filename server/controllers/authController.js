@@ -15,6 +15,17 @@ const register = async (req, res) => {
     try {
         const { name, email, password, role } = req.body;
 
+        // Block admin registration via public route
+        if (
+            role === 'admin' ||
+            email === process.env.ADMIN_EMAIL
+        ) {
+            return res.status(403).json({
+                success: false,
+                message: 'Admin registration is not allowed via this route.'
+            });
+        }
+
         // Check if user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {

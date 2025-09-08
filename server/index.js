@@ -10,12 +10,15 @@ const recipeRoutes = require('./routes/recipes');
 const authRoutes = require('./routes/auth');
 const errorHandler = require('./middleware/errorHandler');
 const subscribeRoutes = require('./routes/subscriber');
+const seedAdmin = require('./utils/seedAdmin');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Connect to MongoDB
-connectDB();
+connectDB().then(() => {
+    seedAdmin();
+});
 
 // Middleware
 app.use(cors({

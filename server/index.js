@@ -31,12 +31,10 @@ connectDB().then(async () => {
         return;
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     await User.create({
         name,
         email,
-        password: hashedPassword,
+        password,
         role: 'admin'
     });
 

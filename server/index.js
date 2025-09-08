@@ -11,7 +11,6 @@ const recipeRoutes = require('./routes/recipes');
 const authRoutes = require('./routes/auth');
 const errorHandler = require('./middleware/errorHandler');
 const subscribeRoutes = require('./routes/subscriber');
-const seedAdmin = require('./utils/seedAdmin');
 const User = require('./models/User');
 
 const app = express();

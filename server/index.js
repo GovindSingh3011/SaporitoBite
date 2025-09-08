@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 const os = require('os');
+const bcrypt = require('bcryptjs');
 
 const connectDB = require('./config/database');
 const recipeRoutes = require('./routes/recipes');
@@ -11,13 +12,36 @@ const authRoutes = require('./routes/auth');
 const errorHandler = require('./middleware/errorHandler');
 const subscribeRoutes = require('./routes/subscriber');
 const seedAdmin = require('./utils/seedAdmin');
+const User = require('./models/User');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB
-connectDB().then(() => {
-    seedAdmin();
+connectDB().then(async () => {
+    const name = process.env.ADMIN_NAME;
+    const email = process.env.ADMIN_EMAIL;
+    const password = process.env.ADMIN_PASSWORD;
+
+    if (!name || !email || !password) {
+        console.warn('Admin credentials not set in .env');
+        return;
+    }
+
+    const existingAdmin = await User.findOne({ email, role: 'admin' });
+    if (existingAdmin) {
+        return;
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await User.create({
+        name,
+        email,
+        password: hashedPassword,
+        role: 'admin'
+    });
+
+    console.log('Admin user seeded.');
 });
 
 // Middleware

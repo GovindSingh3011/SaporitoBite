@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:5000';
+const BASE_URL = import.meta.env.VITE_APP_API_URL || '';
 
 const ChangePasswordModal = ({ open, onClose }) => {
     const [form, setForm] = useState({

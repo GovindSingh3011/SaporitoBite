@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:5000';
+const BASE_URL = import.meta.env.VITE_APP_API_URL || '';
 
 export default function Register() {
     const [form, setForm] = useState({ name: '', email: '', password: '' });

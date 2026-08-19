@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
 import ChangePasswordModal from './ChangePassword';
 
-const BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:5000';
+const BASE_URL = import.meta.env.VITE_APP_API_URL || '';
 
 const Dashboard = () => {
     const [user, setUser] = useState(null);
